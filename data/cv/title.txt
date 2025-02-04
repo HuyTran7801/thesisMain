@@ -1,0 +1,34 @@
+Lecture 2: Image Formatio, Perspective Projection, Time Derivative, Motion Field
+Lecture 3: Time to Contact, Focus of Expansion, Direct Motion Vision
+Methods, Noise Gain
+Lecture 4: Fixed Optical Flow, Optical Mouse, Constant Brightness Assumption, Closed Form Solution
+Lecture 5: TTC and FOR Montivision Demos, Vanishing Point, Use of VPs
+in Camera Calibration
+Lecture 6: Photometric Stereo, Noise Gain, Error Amplification, Eigenvalues and Eigenvectors Review
+Lecture 7: Gradient Space, Reflectance Map, Image Irradiance Equation,
+Gnomonic Projection
+Lecture 8: Shape from Shading, Special Cases, Lunar Surface, Scanning
+Electron Microscope, Green’s Theorem in Photometric Stereo
+Lecture 9: Shape from Shading, General Case - From First Order Nonlinear
+PDE to Five ODEs
+Lecture 10: Characteristic Strip Expansion, Shape from Shading, Iterative
+Solutions
+Lecture 11: Edge Detection, Subpixel Position, CORDIC, Line Detection,
+Lecture 12: Blob analysis, Binary Image Processing, Use of Green’s Theorem, Derivative and Integral as Convolutions
+Lecture 13: Object detection, Recognition and Pose Determination, PatQuick
+Lecture 14: Inspection in PatQuick, Hough Transform, Homography, Position Determination, Multi-Scale
+Lecture 15: Alignment, recognition in PatMAx, distance field, filtering and
+sub-sampling
+Lecture 16: Fast Convolution, Low Pass Filter Approximations, Integral
+Images
+Lecture 17: Photogrammetry, Orientation, Axes of Inertia, Symmetry, Absolute, Relative, Interior, and Exterior Orientation
+Lecture 18: Rotation and How to Represent it, Unit Quaternions, the
+Space of Rotations
+Lecture 19: Absolute Orientation in Closed Form, Outliers and Robustness,
+RANSAC
+Lecture 20: Space of Rotations, Regular Tessellations, Critical Surfaces in
+Motion Vision and Binocular Stereo
+Lecture 21: Relative Orientation, Binocular Stereo, Structure from Motion, Quadrics, Camera Calibration, Reprojection
+Lecture 22: Exterior Orientation, Recovering Position and Orientation,
+Bundle Adjustment, Object Shape
+Lecture 23: Gaussian Image and Extended Gaussian Image, Solids of Revolution, Direction Histograms, Regular Polyhedra
