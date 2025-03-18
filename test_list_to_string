@@ -1,0 +1,12 @@
+text = '` super `  '
+
+text = text.replace('`', '').strip()
+print(text, len(text))
+
+text2 = "Multiple/Inheritance, class, objects"
+
+text2 = text2.split(",")
+print(text2)
+
+text2[0] = text2[0].split("/")
+print(text2)

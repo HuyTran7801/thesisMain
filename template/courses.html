@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Selection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #ff9900;
+            padding: 18px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar button {
+            color: white;
+            background-color: transparent;
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 0 15px;
+            font-weight: bold;
+            border: 2px solid white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .navbar button:hover {
+            background-color: black;
+            color: #ff9900;
+            border-color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar button:active {
+            transform: translateY(-1px);
+        }
+
+        #div-all-courses {
+            padding-top: 50px;
+            padding-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff, #f9f9f9);
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #ff9900;
+            border-radius: 2px;
+        }
+
+        .courses-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        #div-courses {
+            margin-top: 30px;
+        }
+        
+        #ul-courses {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style-type: none;
+            padding: 0;
+            gap: 30px;
+        }
+        
+        #ul-courses button {
+            width: 300px;
+            height: 280px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+        
+        #ul-courses button:hover{
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 153, 0, 0.2);
+            border-bottom: 5px solid #ff9900;
+        }
+        
+        #ul-courses h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        #ul-courses button:hover h4{
+            color: #ff9900;
+        }
+
+        #img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        #ul-courses button:hover img{
+            transform: scale(1.05);
+        }
+        
+        .image-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        footer {
+            margin-top: 70px;
+            padding: 30px 0;
+            background-color: #ff9900;
+            color: white;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .course-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff9900;
+        }
+        
+        /* Animation for buttons on page load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #ul-courses li {
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        
+        #ul-courses li:nth-child(1) { animation-delay: 0.1s; }
+        #ul-courses li:nth-child(2) { animation-delay: 0.2s; }
+        #ul-courses li:nth-child(3) { animation-delay: 0.3s; }
+        #ul-courses li:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <header>
+            <div class="navbar">
+                <button type="submit" name="click" value="service">Services</button>
+                <button type="submit" name="click" value="about">About us</button>
+                <button type="submit" name="click" value="contact">Contact</button>
+                <button type="submit" name="click" value="profile">Your profile</button>
+            </div>
+        </header>
+        
+        <div id="div-all-courses">
+            <h1>Explore Our Courses</h1>
+        </div>
+        <div id="div-courses">
+            <ul id="ul-courses">
+                {% for course in courses: %}
+                <li>
+                    <button type="submit" name="btn" value="{{course[0]}}">
+                        <i class="fas fa-code course-icon"></i>
+                        <h4>{{course[1]}}</h4>
+                        <div class="image-container">
+                            <img id="img" src="{{ url_for('static', filename='photos/' + course[2] + '.jpg') }}">
+                        </div>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </form> 
+    
+    <footer>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            // Get the response text from the h1 element
+            const responseElement = document.querySelector("h1");
+            const response = responseElement.textContent;
+            
+            const retakeButton = document.getElementById("retakeBtn");
+            const levelUpButton = document.getElementById("levelUpBtn");
+            
+            // Set initial state - both enabled
+            retakeButton.disabled = false;
+            levelUpButton.disabled = false;
+            
+            if (response === "GOOD") {
+                retakeButton.disabled = true;
+                levelUpButton.disabled = false;
+            } else if (response === "BAD") {
+                retakeButton.disabled = false;
+                levelUpButton.disabled = true;
+            }
+            
+            console.log("Response:", response);
+            console.log("Retake disabled:", retakeButton.disabled);
+            console.log("Level up disabled:", levelUpButton.disabled);
+        }
+    </script>
+</head>
+<body>
+    <h2>Your result is {{result}}/{{total}}</h2>
+    <h1>{{response}}</h1>
+    <form action="" method="post">
+        <button type="submit" name="btn" value="retake" id="retakeBtn">Try again</button>
+        <button type="submit" name="btn" value="level up" id="levelUpBtn">Challenge more</button>
+        <button type="submit" name="btn" value="stop">STOP</button>
+    </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .result-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            border-top: 8px solid #ff9900;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 20px 0 40px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .GOOD {
+            background-color: rgba(255, 153, 0, 0.2);
+            color: #ff9900;
+        }
+        
+        .BAD {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #retakeBtn {
+            background-color: black;
+            color: white;
+        }
+        
+        #retakeBtn:hover:not(:disabled) {
+            background-color: #333;
+        }
+        
+        #levelUpBtn {
+            background-color: #ff9900;
+            color: white;
+        }
+        
+        #levelUpBtn:hover:not(:disabled) {
+            background-color: #e68a00;
+            color: black;
+        }
+        
+        #stopBtn {
+            background-color: white;
+            color: black;
+            border: 2px solid #ddd;
+            margin-top: 10px;
+        }
+        
+        #stopBtn:hover {
+            border-color: #ff9900;
+            color: #ff9900;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .score-display {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: #f5f5f5;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .score-number {
+            color: #ff9900;
+            font-weight: 700;
+        }
+        
+        @media (min-width: 768px) {
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            #stopBtn {
+                margin-top: 0;
+            }
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Get the response text from the h1 element
+            const responseElement = document.querySelector("h1");
+            const response = responseElement.textContent;
+            
+            // Add class based on response
+            if (response === "GOOD") {
+                responseElement.classList.add("GOOD");
+            } else if (response === "BAD") {
+                responseElement.classList.add("BAD");
+            }
+            
+            const retakeButton = document.getElementById("retakeBtn");
+            const levelUpButton = document.getElementById("levelUpBtn");
+            
+            // Set initial state - both enabled
+            retakeButton.disabled = false;
+            levelUpButton.disabled = false;
+            
+            if (response === "GOOD") {
+                retakeButton.disabled = true;
+                levelUpButton.disabled = false;
+            } else if (response === "BAD") {
+                retakeButton.disabled = false;
+                levelUpButton.disabled = true;
+            }
+            
+            console.log("Response:", response);
+            console.log("Retake disabled:", retakeButton.disabled);
+            console.log("Level up disabled:", levelUpButton.disabled);
+        }
+    </script>
+</head>
+<body>
+    <div class="result-container">
+        <div class="score-display">
+            Your score: <span class="score-number">{{result}}</span>/<span class="score-number">{{total}}</span>
+        </div>
+        <h1>{{response}}</h1>
+        <form action="" method="post" class="buttons">
+            <button type="submit" name="btn" value="retake" id="retakeBtn">Try again</button>
+            <button type="submit" name="btn" value="level up" id="levelUpBtn">Challenge more</button>
+            <button type="submit" name="btn" value="stop" id="stopBtn">STOP</button>
+        </form>
+    </div>
+</body>
+</html>

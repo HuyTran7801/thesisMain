@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Form</title>
+    <style>
+        body {
+            background-color: #ff9900;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        #mcqForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        #div-mcq {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        li {
+            margin-bottom: 15px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        li p {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        /* For code blocks */
+        pre, code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+            max-width: 100%;
+            text-align: left;
+        }
+
+        label {
+            display: inline-block;
+            margin-left: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: calc(100% - 30px); /* Accounting for radio button width */
+            vertical-align: top;
+        }
+
+        input[type="radio"] {
+            vertical-align: top;
+            margin-top: 3px;
+        }
+
+        #div-button {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #submitBtn {
+            background-color: black;
+            color: white;
+        }
+
+        #submitBtn:hover {
+            background-color: #ff9900;
+            color: black;
+        }
+
+        #nextBtn {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+
+        #nextBtn:hover {
+            background-color: #ff9900;
+            color: black;
+        }
+
+        #feedback {
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            margin: 20px auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+        }
+
+        #feedback p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
+        }
+
+        a {
+            display: inline-block;
+            max-width: 100%;
+            overflow-wrap: break-word;
+            color: #0066cc;
+            text-decoration: underline;
+        }
+        
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9900;
+            margin-bottom: 15px;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #mcqForm {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            #div-button {
+                flex-direction: column;
+            }
+
+            #timer {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head> 
+<body>
+    <form id="mcqForm" action="" method="post">
+        <div id="div-credential">{{appearance}} users have answered this question</div>
+        <div id="timer">Time remaining: 20s</div>
+        <div id="div-mcq">
+            <ul>
+                <li><p><span style="white-space: pre-wrap">{{qa[0]}}</span></p></li>
+                <li>
+                    <input type="radio" name="ans" value="A)" id="A">
+                    <label for="A">{{qa[1]}}</label>
+                </li>
+                <li>
+                    <input type="radio" name="ans" value="B)" id="B">
+                    <label for="B">{{qa[2]}}</label>
+                </li>
+                <li>
+                    <input type="radio" name="ans" value="C)" id="C">
+                    <label for="C">{{qa[3]}}</label>
+                </li>
+                <li>
+                    <input type="radio" name="ans" value="D)" id="D">
+                    <label for="D">{{qa[4]}}</label>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="div-button">
+            <button type="submit" name="btn" value="submit" id="submitBtn">Submit Answer</button>
+        </div>
+
+        <div id="feedback">
+            <p id="correct-text">{{ corrected_text }}</p>
+            <p id="feedback1">{{ feedback1 }}</p>
+            <p id="feedback2">{{ feedback2 }}</p>
+            <p id="feedback3">{{ feedback3 }}</p>
+            <button type="submit" name="btn" value="next" id="nextBtn">Next Question</button>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize variables
+            const timerElement = document.getElementById('timer');
+            const feedbackDiv = document.getElementById('feedback');
+            const submitBtn = document.getElementById('submitBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const form = document.getElementById('mcqForm');
+            const correctText = document.getElementById('correct-text');
+            let timeLeft = 60;
+            let timerInterval;
+            
+            // Process feedback text to make links clickable
+            function makeLinksClickable() {
+                const feedbackElements = document.querySelectorAll('#feedback p');
+                
+                feedbackElements.forEach(element => {
+                    // URL regex pattern that matches http/https URLs
+                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    
+                    // Replace URLs with anchor tags
+                    if (element.innerHTML) {
+                        element.innerHTML = element.innerHTML.replace(urlRegex, function(url) {
+                            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                        });
+                    }
+                });
+            }
+            
+            // Call the function to make links clickable
+            makeLinksClickable();
+            
+            // Check if feedback is already showing (e.g., after form submission)
+            const correctTextContent = correctText.innerText.trim();
+            if (correctTextContent === 'CORRECT' || correctTextContent === 'INCORRECT') {
+                feedbackDiv.style.display = 'block';
+                
+                // Set feedback div styling based on correctness
+                if (correctTextContent === 'CORRECT') {
+                    feedbackDiv.style.backgroundColor = 'lightgreen';
+                    correctText.style.color = 'green';
+                } else if (correctTextContent === 'INCORRECT') {
+                    feedbackDiv.style.backgroundColor = 'lightcoral';
+                    correctText.style.color = 'darkred';
+                }
+                
+                submitBtn.disabled = true;
+                submitBtn.classList.add('disabled');
+                clearInterval(timerInterval);
+                return;
+            } else {
+                // Hide feedback div initially
+                feedbackDiv.style.display = 'none';
+            }
+            
+            // Hide nextBtn initially
+            nextBtn.disabled = true;
+            nextBtn.classList.add('disabled');
+            
+            // Start the timer
+            startTimer();
+            
+            // Timer function
+            function startTimer() {
+                timerInterval = setInterval(function() {
+                    timeLeft--;
+                    timerElement.textContent = 'Time remaining: ' + timeLeft + 's';
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timeUp();
+                    }
+                }, 1000);
+            }
+            
+            // What happens when time is up
+            function timeUp() {
+                // Disable submit button and add visual indication
+                submitBtn.disabled = true;
+                submitBtn.classList.add('disabled');
+                
+                // Show feedback div
+                feedbackDiv.style.display = 'block';
+                
+                // Enable next button
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('disabled');
+                
+                // Get selected answer or null if none selected
+                const selectedAnswer = document.querySelector('input[name="ans"]:checked');
+                
+                // Set form to submit with time-up flag
+                const timeUpField = document.createElement('input');
+                timeUpField.type = 'hidden';
+                timeUpField.name = 'time_up';
+                timeUpField.value = 'true';
+                form.appendChild(timeUpField);
+                
+                // If no answer was selected when time is up
+                if (!selectedAnswer) {
+                    // Set answer to null for backend processing
+                    const nullAnswer = document.createElement('input');
+                    nullAnswer.type = 'hidden';
+                    nullAnswer.name = 'ans';
+                    nullAnswer.value = '';
+                    form.appendChild(nullAnswer);
+                }
+                
+                // Submit the form automatically when time is up
+                const autoSubmit = document.createElement('input');
+                autoSubmit.type = 'hidden';
+                autoSubmit.name = 'btn';
+                autoSubmit.value = 'submit';
+                form.appendChild(autoSubmit);
+                
+                form.submit();
+            }
+            
+            // Form submission handler
+            form.addEventListener('submit', function(event) {
+                // Only for submit button clicks, not for timeUp or next button
+                if (event.submitter && event.submitter.id === 'submitBtn') {
+                    event.preventDefault();
+                    
+                    // Clear the timer
+                    clearInterval(timerInterval);
+                    
+                    // Disable submit button
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('disabled');
+                    
+                    // Enable next button
+                    nextBtn.disabled = false;
+                    nextBtn.classList.remove('disabled');
+                    
+                    // Show feedback div
+                    feedbackDiv.style.display = 'block';
+                    
+                    // Create a FormData object from the form
+                    const formData = new FormData(form);
+                    formData.append('btn', 'submit');
+                    
+                    // Use fetch to submit the form data asynchronously
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(html => {
+                        // Extract feedback information from response and update the page
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        // Update feedback elements
+                        const newCorrectText = doc.getElementById('correct-text').innerText;
+                        correctText.innerText = newCorrectText;
+                        
+                        // Set feedback div styling based on correctness
+                        if (newCorrectText.trim() === 'CORRECT') {
+                            feedbackDiv.style.backgroundColor = 'lightgreen';
+                            correctText.style.color = 'green';
+                        } else if (newCorrectText.trim() === 'INCORRECT') {
+                            feedbackDiv.style.backgroundColor = 'lightcoral';
+                            correctText.style.color = 'darkred';
+                        }
+                        
+                        const feedbackElements = doc.querySelectorAll('#feedback p');
+                        const currentFeedbackElements = document.querySelectorAll('#feedback p');
+                        
+                        for (let i = 0; i < Math.min(feedbackElements.length, currentFeedbackElements.length); i++) {
+                            currentFeedbackElements[i].innerText = feedbackElements[i].innerText;
+                        }
+                        
+                        // Make the updated links clickable
+                        makeLinksClickable();
+                    })
+                    .catch(error => {
+                        console.error('Error submitting form:', error);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

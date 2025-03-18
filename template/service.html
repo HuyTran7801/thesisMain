@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;    
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #ff9900;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar button {
+            color: #ff9900;
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 0 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar button:hover {
+            background-color: black;
+            transform: scale(1.1);
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        section {
+            margin: 50px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 15px 0;
+            background-color: #ff9900;
+            color: white;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        
+
+        #div-button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        #ul-button-container {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #ul-button-container li {
+            margin: 0 15px; /* Adjust spacing between buttons */
+        }
+        
+        #ul-button-container button {
+            width: 650px;
+            background-color: gainsboro;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        #ul-button-container button:hover {
+            background-color: goldenrod;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <h2>
+        {{greeting}}
+    </h2> -->
+    <form action="" method="post">
+        <div class="navbar">
+            <button type="submit" name="click" value="service">Services</button>
+            <button type="submit" name="click" value="about">About us</button>
+            <button type="submit" name="click" value="contact">Contact</button>
+            <button type="submit" name="click" value="log in">Log in</button>
+            <button type="submit" name="click" value="sign up">Sign up</button>
+
+        </div>
+
+        <div id="div-button-container">
+                <br>
+                <ul id="ul-button-container">
+                    <li>
+                        <button type="submit" name="btn" value="MCQs generation">
+                            <!-- MCQs Generation -->
+                            <h3>Quiz Generation</h3>
+                            <br>
+                            <p>Our service supplies a bank of questions
+                                by application of LLM to effectively enhance the variety and difficulty with 
+                                specific-domain knowledge.
+                            </p>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="submit" name="btn" value="Add a course">
+                            <!-- Chatbot -->
+                            <h3>Add a course</h3>
+                            <br>
+                            <p>Our service suppor teacher add course and set-up questions.</p>
+                        </button>
+                    </li>
+                </ul>
+        </div>
+    
+    </form>
+    
+    <footer>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -3,7 +3,13 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.document_loaders import DirectoryLoader, TextLoader
+from langchain.retrievers.document_compressors import EmbeddingsFilter
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainExtractor
+from langchain.document_transformers import EmbeddingsRedundantFilter
+from langchain.retrievers.document_compressors import DocumentCompressorPipeline
+
+# from langchain_community.document_loaders import PyPDFLoader
 
 
 embedding_model_name = 'sentence-transformers/all-MiniLM-L6-v2'
@@ -15,7 +21,7 @@ class RAG:
         self.db = Chroma(persist_directory=self.persist_directory, embedding_function=self.embedding_model)
     
     def load_documents(self, directory):
-        loader = PyPDFDirectoryLoader(directory) # oop, dsa
+        loader = PyPDFDirectoryLoader(directory)
         documents = loader.load()
         return documents
     
@@ -89,6 +95,7 @@ class RAG:
             
     def semantic_search(self, query_text, k_relevant):
         results = self.db.similarity_search_with_score(query_text, k=k_relevant)
+        # retriever = self.db.as_retriever()
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
 
         documents = dict()
@@ -105,4 +112,35 @@ class RAG:
 
         return context_text, documents
     
+    def advanced_semantic_search(self, query_text, k_relevant):
+        retriever = self.db.as_retriever(search_kwargs={"k": k_relevant})
         
+        # ------POST-RETRIEVAL-------
+        # Filtering
+        redundant_filter = EmbeddingsRedundantFilter(embeddings=self.embedding_model)
+        relevant_filter = EmbeddingsFilter(embeddings=self.embedding_model, k=8)
+        
+        # pipeline for filtering
+        compressed_pipeline = DocumentCompressorPipeline(transformers=[redundant_filter, relevant_filter])
+        
+        # Filtering + Compression
+        comp_pipe_retriever = ContextualCompressionRetriever(base_retriever=retriever, base_compressor=compressed_pipeline)
+        
+        docs = comp_pipe_retriever.get_relevant_documents(query=query_text)
+        
+        
+        context = ''
+        documents = set()
+        
+        for i in docs:
+            context += i.page_content
+            source = i.metadata['source']
+            # page = i.metadata['page']
+            documents.add(source)
+        documents = str(documents)   
+        # documents     
+        return context, documents
+    
+    
+    # [_DocumentWithState(metadata={'id': 0, 'page': 9, 'source': 'static\\filestemp1\\OOP_Lesson03en.pdf'}, 
+    #                     page_content='Abstraction \n• organisms, \nmammals, \nhumans  \n10', 

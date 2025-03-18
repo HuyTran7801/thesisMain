@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #div-number-mcqs, #div-number-fill, #div-number-coding, #div-level-mcqs, #div-level-fill, #div-level-coding, #div-btn {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        
+        #div-topic {
+            margin-bottom: 25px;
+        }
+        
+        #div-topic input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #888;
+        }
+        
+        p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        input[type="radio"] {
+            margin: 8px;
+            cursor: pointer;
+        }
+        
+        label {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: darkorange;
+            color: black;
+        }
+        
+        #div-error {
+            color: red;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Course: {{course}}</h2>
+    <form action="" method="post">
+        <div id="div-option">
+            <div class="radio-options">
+                <input type="radio" id="mcqs" name="options" value="mcqs">
+                <label for="mcqs">Multiple-choice questions</label>
+
+                <input type="radio" id="fill" name="options" value="fill">
+                <label for="fill">Fill in the blank questions</label>
+
+                <input type="radio" id="coding" name="options" value="coding">
+                <label for="coding">Coding questions</label>
+            </div>
+        </div>
+
+        <div id="div-topic">
+            <input type="text" id="topic-input" name="topic" placeholder="Type your topic here">
+        </div>
+
+        <div id="div-hashtags" style="margin-bottom: 20px; text-align: left;">
+            <p style="margin-bottom: 10px; font-size: 14px; color: #666;">Suggested topics:</p>
+            <div id="hashtag-container">
+                {% for domain in hashtags: %}
+                <span class="hashtag" 
+                    style="display: inline-block; 
+                            background-color: #f0f0f0; 
+                            color: #0066cc; 
+                            padding: 5px 10px; 
+                            border-radius: 15px; 
+                            margin: 5px; 
+                            cursor: pointer; 
+                            font-size: 14px; 
+                            transition: all 0.2s;"
+                    data-tag="{{ domain }}">
+                    #{{ domain }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="div-number-mcqs">
+            <p>Select your number of MCQs:</p>
+            <div class="radio-options">
+                
+                <input type="radio" id="5" name="num_of_mcqs" value="5">
+                <label for="5">5</label>
+
+                <input type="radio" id="10" name="num_of_mcqs" value="10">
+                <label for="10">10</label>
+                
+                <input type="radio" id="15" name="num_of_mcqs" value="15">
+                <label for="15">15</label>
+                
+            </div>
+        </div>
+
+        
+        <div id="div-number-fill">
+            <p>Select your number of Fill-in-blank questions:</p>
+            <div class="radio-options">
+                
+                <input type="radio" id="5-fill" name="num_of_fill" value="5">
+                <label for="5-fill">5</label>
+
+                <input type="radio" id="10-fill" name="num_of_fill" value="10">
+                <label for="10-fill">10</label>
+                
+                <input type="radio" id="15-fill" name="num_of_fill" value="15">
+                <label for="15-fill">15</label>
+                
+            </div>
+        </div>
+
+        <div id="div-number-coding">
+            <p>Select your number of coding assignment</p>
+            <div class="radio-options">
+                <input type="radio" id="3" name="num_of_coding" value="3">
+                <label for="3">3</label>
+                
+                <input type="radio" id="5" name="num_of_coding" value="5">
+                <label for="5">5</label>
+            </div>
+        </div>
+
+        <div id="div-level-mcqs">
+            <p>Challenge yourself by difficulty</p>
+            <div class="radio-options">
+                <input type="radio" id="EASY-mcqs" name="level_of_mcqs" value="easy">
+                <label for="EASY-mcqs">EASY</label>
+                
+                <input type="radio" id="HARD-mcqs" name="level_of_mcqs" value="hard">
+                <label for="HARD-mcqs">HARD</label>
+            </div>
+        </div>
+
+        
+        <div id="div-level-fill">
+            <p>Challenge yourself by difficulty</p>
+            <div class="radio-options">
+                <input type="radio" id="EASY-fill" name="level_of_fill" value="easy">
+                <label for="EASY-fill">EASY</label>
+                
+                <input type="radio" id="HARD-fill" name="level_of_fill" value="hard">
+                <label for="HARD-fill">HARD</label>
+            </div>
+        </div>
+
+        
+        <div id="div-level-coding">
+            <p>Challenge yourself by difficulty</p>
+            <div class="radio-options">
+                <input type="radio" id="EASY-coding" name="level_of_coding" value="easy">
+                <label for="EASY-coding">EASY</label>
+                
+                <input type="radio" id="HARD-coding" name="level_of_coding" value="hard">
+                <label for="HARD-coding">HARD</label>
+            </div>
+        </div>
+
+        <div id="div-btn">
+            <button type="submit" name="btn" value="go">GO</button>
+        </div>
+        <div id="div-error">{{error_text}}</div>
+
+        <div id="div-back-btn">
+            <button type="submit" name="btn" value="back">Choose another course</button>
+        </div>
+    </form>
+
+    <script>
+        // Get all the necessary elements
+        const optionRadios = document.querySelectorAll('input[name="options"]');
+        const topicInput = document.getElementById('topic-input');
+        const mcqsNumberRadios = document.querySelectorAll('input[name="num_of_mcqs"]');
+        const fillNumberRadios = document.querySelectorAll('input[name="num_of_fill"]')
+        const codingNumberRadios = document.querySelectorAll('input[name="num_of_coding"]');
+        const mcqsLevelRadios = document.querySelectorAll('input[name="level_of_mcqs"]');
+        const fillLevelRadios = document.querySelectorAll('input[name="level_of_fill"]');
+        const codingLevelRadios = document.querySelectorAll('input[name="level_of_coding"]');
+
+        const divNumberMcqs = document.getElementById('div-number-mcqs');
+        const divNumberFill = document.getElementById('div-number-fill')
+        const divNumberCoding = document.getElementById('div-number-coding');
+        const divLevelMcqs = document.getElementById('div-level-mcqs');
+        const divLevelFill = document.getElementById('div-level-fill');
+        const divLevelCoding = document.getElementById('div-level-coding');
+        const divBtn = document.getElementById('div-btn');
+
+        // Function to reset all selections
+        function resetSelections() {
+            // Reset topic input
+            topicInput.value = '';
+
+            // Reset number selection radios
+            [
+                ...document.querySelectorAll('input[name="num_of_mcqs"]'),
+                ...document.querySelectorAll('input[name="num_of_fill"]'),
+                ...document.querySelectorAll('input[name="num_of_coding"]')
+            ].forEach(radio => {
+                radio.checked = false;
+            });
+
+            // Reset level selection radios
+            [
+                ...document.querySelectorAll('input[name="level_of_mcqs"]'),
+                ...document.querySelectorAll('input[name="level_of_fill"]'),
+                ...document.querySelectorAll('input[name="level_of_coding"]')
+            ].forEach(radio => {
+                radio.checked = false;
+            });
+
+            // Hide all sections
+            divNumberMcqs.style.display = 'none';
+            divNumberFill.style.display = 'none';
+            divNumberCoding.style.display = 'none';
+            divLevelMcqs.style.display = 'none';
+            divLevelFill.style.display = 'none';
+            divLevelCoding.style.display = 'none';
+            divBtn.style.display = 'none';
+        }
+
+        // Add event listeners to option radios
+        optionRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Reset all selections first
+                resetSelections();
+
+                // Show appropriate number selection based on option
+                if (this.value === 'mcqs') {
+                    divNumberMcqs.style.display = 'block';
+                } else if (this.value === 'fill') {
+                    divNumberFill.style.display = 'block';
+                } else if (this.value === 'coding') {
+                    divNumberCoding.style.display = 'block';
+                }
+            });
+        });
+
+        // Add event listeners to number radios
+        mcqsNumberRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divLevelMcqs.style.display = 'block';
+            });
+        });
+
+        fillNumberRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divLevelFill.style.display = 'block';
+            });
+        });
+
+        codingNumberRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divLevelCoding.style.display = 'block';
+            });
+        });
+
+        // Add event listeners to level radios
+        mcqsLevelRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divBtn.style.display = 'block';
+            });
+        });
+
+        fillLevelRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divBtn.style.display = 'block';
+            });
+        });
+
+        codingLevelRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                divBtn.style.display = 'block';
+            });
+        });
+
+
+        // Handle click events for hashtags
+        document.addEventListener('DOMContentLoaded', function() {
+            const hashtags = document.querySelectorAll('.hashtag');
+            const topicInput = document.getElementById('topic-input');
+            
+            hashtags.forEach(tag => {
+                // Add hover effects
+                tag.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = '#e0e0e0';
+                });
+                
+                tag.addEventListener('mouseout', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.backgroundColor = '#f0f0f0';
+                    }
+                });
+                
+                // Add click handling for multiple tag selection
+                tag.addEventListener('click', function() {
+                    const tagValue = this.getAttribute('data-tag');
+                    
+                    // Split current input by comma and trim each tag
+                    const currentTags = topicInput.value.split(',')
+                        .map(t => t.trim())
+                        .filter(t => t !== '');
+                    
+                    // Check if the tag is already selected
+                    const tagIndex = currentTags.indexOf(tagValue);
+                    
+                    if (tagIndex !== -1) {
+                        // Tag exists, remove it
+                        currentTags.splice(tagIndex, 1);
+                        this.style.backgroundColor = '#f0f0f0';
+                        this.style.color = '#0066cc';
+                        this.classList.remove('selected');
+                    } else {
+                        // Tag doesn't exist, add it
+                        currentTags.push(tagValue);
+                        this.style.backgroundColor = '#0066cc';
+                        this.style.color = 'white';
+                        this.classList.add('selected');
+                    }
+                    
+                    // Update the input value
+                    topicInput.value = currentTags.join(', ');
+                });
+            });
+            
+            // Update hashtag appearance based on input changes
+            topicInput.addEventListener('input', function() {
+                const currentTags = this.value.split(',')
+                    .map(t => t.trim())
+                    .filter(t => t !== '');
+                
+                hashtags.forEach(tag => {
+                    const tagValue = tag.getAttribute('data-tag');
+                    if (currentTags.includes(tagValue)) {
+                        tag.style.backgroundColor = '#0066cc';
+                        tag.style.color = 'white';
+                        tag.classList.add('selected');
+                    } else {
+                        tag.style.backgroundColor = '#f0f0f0';
+                        tag.style.color = '#0066cc';
+                        tag.classList.remove('selected');
+                    }
+                });
+            });
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .top-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: color 0.3s ease;
+        }
+        
+        button:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post" class="container">
+        <div class="top-buttons">
+            <button type="submit" name="btn" value="attach file">
+                ATTACH FILE 
+            </button>
+            <button type="submit" name="btn" value="go quiz">
+                GO QUIZ
+            </button>
+        </div>
+        <button type="submit" name="btn" value="back">BACK TO COURSE</button>
+    </form>
+</body>
+</html>
